@@ -6,7 +6,7 @@
     <title>Praktikum Pemrograman Web</title>
 </head>
 <body>
-    <?php 
+    <?php
         echo "Hello, Uray Diana";
     ?>
 </body>
