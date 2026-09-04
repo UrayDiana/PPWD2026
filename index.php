@@ -1,13 +1,193 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Praktikum Pemrograman Web</title>
+    
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #dff3ff, #f8fcff);
+            margin: 0;
+            color: #24506b;
+        }
+
+        .container {
+            width: 85%;
+            max-width: 900px;
+            margin: 40px auto;
+            background-color: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(80, 160, 200, 0.18);
+        }
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+
+        .hero img {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            display: block;
+            filter: brightness(75%);
+        }
+
+        .hero h1 {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            text-align: center;
+            color: white;
+            font-size: 55px;
+            margin: 0;
+            letter-spacing: 3px;
+            text-shadow: 2px 2px 8px #24506b;
+        }
+
+        .intro {
+            text-align: center;
+            margin: 25px 0;
+        }
+
+        .intro h2 {
+            margin-bottom: 8px;
+            color: #3182a8;
+        }
+
+        .intro p {
+            color: #6b8796;
+            font-size: 14px;
+        }
+
+        .photos {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .card {
+            flex: 1;
+            background-color: #eef9ff;
+            text-align: center;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(80, 160, 200, 0.15);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 18px rgba(80, 160, 200, 0.25);
+        }
+
+        .card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .card h3 {
+            font-size: 16px;
+            margin: 15px 10px 5px;
+            color: #3182a8;
+        }
+
+        .card p {
+            font-size: 13px;
+            color: #6b8796;
+            padding: 0 15px 15px;
+            margin: 0;
+        }
+
+        footer {
+            margin-top: 30px;
+            background-color: #5ba9c9;
+            color: white;
+            text-align: center;
+            padding: 18px;
+            border-radius: 10px;
+            font-size: 13px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                width: 92%;
+                padding: 15px;
+            }
+
+            .hero img {
+                height: 230px;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .photos {
+                flex-direction: column;
+            }
+
+            .card img {
+                height: 200px;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <?php
-        echo "Hello, Uray Diana";
-    ?>
+
+    <div class="container">
+
+        <div class="hero">
+            <img src="diana utama.jpeg" alt="Foto Utama">
+        </div>
+
+        <div class="intro">
+            <h2>My Favorite Moments</h2>
+            <p>
+                Beberapa momen yang saya abadikan dalam kehidupan sehari-hari.
+            </p>
+        </div>
+
+        <div class="photos">
+
+            <div class="card">
+                <img src="jalan.jpeg" alt="Hari Pendidikan">
+                <h3>Hari Pendidikan</h3>
+                <p>Momen saat memperingati Hari Pendidikan.</p>
+            </div>
+
+            <div class="card">
+                <img src="diana.jpeg" alt="Sibuk">
+                <h3>Sibuk</h3>
+                <p>Momen ketika sedang melakukan berbagai kegiatan.</p>
+            </div>
+
+            <div class="card">
+                <img src="nari.jpeg" alt="Menari">
+                <h3>Menari</h3>
+                <p>Momen saat mengerjakan tugas Seni Budaya.</p>
+            </div>
+
+        </div>
+
+        <footer>
+            Semangat dan terus nikmati setiap momen.
+        </footer>
+
+    </div>
+
 </body>
 </html>
