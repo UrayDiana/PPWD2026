@@ -1,72 +1,71 @@
-/**
- * script.js - JavaScript dasar (client-side, jalan di browser)
- * -----------------------------------------
- * File ini TIDAK berhubungan dengan PHP/database sama sekali.
- * PHP jalan di SERVER (sebelum halaman dikirim ke browser),
- * sedangkan file ini jalan di BROWSER pengguna, SETELAH halaman termuat.
- */
+// ========== 1. TYPING EFFECT ==========
 
-// Mengambil elemen input jumlah dan elemen kecil untuk preview
-const inputJumlah = document.getElementById('jumlah');
-const previewRupiah = document.getElementById('previewRupiah');
+const typingText = document.getElementById('typing-text');
+const names = ['Ahmad Fauzi', 'Web Developer', 'Mahasiswa SI'];
+let nameIndex = 0;
 
-/**
- * Fungsi untuk memformat angka menjadi format Rupiah, contoh: 50000 -> "Rp 50.000"
- * Ini VERSI JAVASCRIPT dari fungsi formatRupiah() yang ada di index.php.
- * Keduanya sengaja dibuat terpisah karena PHP jalan di server (format untuk
- * data yang SUDAH tersimpan), sedangkan JS ini jalan di browser (format
- * angka SAAT user sedang mengetik, sebelum data dikirim).
- */
-function formatRupiahJS(angka) {
-    return 'Rp ' + Number(angka).toLocaleString('id-ID');
+let charIndex = 0;
+let isDeleting = false;
+
+function typeEffect() {
+    const currentName = names[nameIndex];
+
+    if (isDeleting) {
+        typingText.textContent = currentName.substring(0, charIndex - 1);
+        charIndex--;
+    } else {
+        typingText.textContent = currentName.substring(0, charIndex + 1);
+        charIndex++;
+    }
+
+    let delay = isDeleting ? 50 : 100;
+
+    if (!isDeleting && charIndex === currentName.length) {
+        delay = 2000; // Jeda saat teks selesai diketik
+        isDeleting = true;
+    } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        nameIndex = (nameIndex + 1) % names.length;
+        delay = 500; // Jeda sebelum mengetik kata baru
+    }
+
+    setTimeout(typeEffect, delay);
 }
 
-/**
- * 'input' event: kode di dalamnya akan dijalankan browser Setiap kali
- * user mengetik/mengubah isi field jumlah (real-time, tanpa perlu submit).
- */
-if (inputJumlah) {
-    inputJumlah.addEventListener('input', function () {
-        const nilai = this.value;
+typeEffect(); // Mulai efek
 
-        if (nilai && nilai > 0) {
-            previewRupiah.textContent = formatRupiahJS(nilai);
-        } else {
-            previewRupiah.textContent = '';
-        }
+// ========== 2. GENERATE PROJECT CARDS ==========
+
+const projects = [
+    {
+        title: 'Website Profil', desc: 'Website profil dengan HTML & CSS', image:
+            'https://via.placeholder.com/300x200/2563eb/fff?text=Profil'
+    },
+    {
+        title: 'Kalkulator JS', desc: 'Kalkulator interaktif', image:
+            'https://via.placeholder.com/300x200/2563eb/fff?text=Kalkulator'
+    },
+    {
+        title: 'Form Interaktif', desc: 'Form pendaftaran dengan validasi', image:
+            'https://via.placeholder.com/300x200/2563eb/fff?text=Form'
+    }
+];
+
+const projectGrid = document.getElementById('project-grid');
+
+projects.forEach(project => {
+    const card = document.createElement('div');
+    card.className = 'project-card';
+
+    card.innerHTML = `
+        <img src="${project.image}" alt="${project.title}">
+        <h3>${project.title}</h3>
+        <p>${project.desc}</p>
+    `;
+
+    card.addEventListener('click', () => {
+        alert(`Anda memilih proyek: ${project.title}`);
     });
-}
 
-/**
- * Fungsi konfirmasi sebelum menghapus data.
- * Dipanggil dari atribut onclick="return konfirmasiHapus(...)" di index.php.
- *
- * confirm() adalah fungsi bawaan browser yang menampilkan dialog Ya/Batal.
- * Fungsi ini HARUS return true/false:
- * - true  -> browser lanjut mengikuti link <a href="hapus.php?id=...">
- * - false -> browser MEMBATALKAN aksi klik link tersebut
- */
-function konfirmasiHapus(nama) {
-    return confirm('Yakin ingin menghapus donasi dari "' + nama + '"?');
-}
-
-/**
- * Validasi tambahan di sisi client sebelum form dikirim (submit).
- * Ini LAPISAN PERTAMA validasi (untuk UX, respons cepat tanpa reload halaman).
- * Validasi di server (proses_tambah.php) tetap WAJIB ada sebagai lapisan
- * kedua/utama, karena validasi JS ini bisa dilewati (browser aneh-aneh,
- * JS dimatikan, dsb).
- */
-const form = document.getElementById('formDonasi');
-
-if (form) {
-    form.addEventListener('submit', function (event) {
-        const nama = document.getElementById('nama').value.trim();
-        const jumlah = document.getElementById('jumlah').value;
-
-        if (nama === '' || jumlah === '' || jumlah < 1000) {
-            event.preventDefault(); // Membatalkan submit form (tidak jadi dikirim ke server)
-            alert('Mohon isi nama dan jumlah donasi minimal Rp 1.000');
-        }
-    });
-}
+    projectGrid.appendChild(card);
+});
