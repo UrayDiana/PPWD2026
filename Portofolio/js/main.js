@@ -32,9 +32,9 @@ function typeEffect() {
     setTimeout(typeEffect, delay);
 }
 
-typeEffect(); // Mulai efek
+typeEffect(); // Mulai efek //
 
-// ========== 2. GENERATE PROJECT CARDS ==========
+// ========= 2. GENERATE PROJECT CARDS =========
 
 const projects = [
     {
