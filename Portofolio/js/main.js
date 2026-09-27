@@ -1,65 +1,57 @@
-// ========== 1. TYPING EFFECT ==========
+const tulisan = document.getElementById("typing-text");
 
-const typingText = document.getElementById('typing-text');
-const names = ['Ahmad Fauzi', 'Web Developer', 'Mahasiswa SI'];
-let nameIndex = 0;
+if (tulisan) {
+    const nama = "Diana.";
+    let i = 0;
+    let isDeleting = false;
 
-let charIndex = 0;
-let isDeleting = false;
+    function ketik() {
+        if (!isDeleting) {
+            tulisan.textContent = nama.substring(0, i + 1);
+            i++;
 
-function typeEffect() {
-    const currentName = names[nameIndex];
+            if (i === nama.length) {
+                isDeleting = true;
+                setTimeout(ketik, 2000);
+                return;
+            }
+        } else {
+            tulisan.textContent = nama.substring(0, i - 1);
+            i--;
 
-    if (isDeleting) {
-        typingText.textContent = currentName.substring(0, charIndex - 1);
-        charIndex--;
-    } else {
-        typingText.textContent = currentName.substring(0, charIndex + 1);
-        charIndex++;
+            if (i === 0) {
+                isDeleting = false;
+            }
+        }
+
+        setTimeout(ketik, isDeleting ? 100 : 150);
     }
 
-    let delay = isDeleting ? 50 : 100;
-
-    if (!isDeleting && charIndex === currentName.length) {
-        delay = 2000; // Jeda saat teks selesai diketik
-        isDeleting = true;
-    } else if (isDeleting && charIndex === 0) {
-        isDeleting = false;
-        nameIndex = (nameIndex + 1) % names.length;
-        delay = 500; // Jeda sebelum mengetik kata baru
-    }
-
-    setTimeout(typeEffect, delay);
+    ketik();
 }
 
-typeEffect(); // Mulai efek
+const form = document.getElementById("contactForm");
 
-// ========== 2. GENERATE PROJECT CARDS ==========
+if (form) {
+    form.onsubmit = async function(e) {
+        e.preventDefault();
 
-const projects = [
-    { title: 'Website Profil', desc: 'Website profil dengan HTML & CSS', image:
-    'https://via.placeholder.com/300x200/2563eb/fff?text=Profil' },
-    { title: 'Kalkulator JS', desc: 'Kalkulator interaktif', image:
-    'https://via.placeholder.com/300x200/2563eb/fff?text=Kalkulator' },
-    { title: 'Form Interaktif', desc: 'Form pendaftaran dengan validasi', image:
-    'https://via.placeholder.com/300x200/2563eb/fff?text=Form' }
-];
+        const hasil = document.getElementById("hasil");
 
-const projectGrid = document.getElementById('project-grid');
+        const response = await fetch(
+            "https://formsubmit.co/ajax/h1101251024@student.untan.ac.id",
+            {
+                method: "POST",
+                body: new FormData(form)
+            }
+        );
 
-projects.forEach(project => {
-    const card = document.createElement('div');
-    card.className = 'project-card';
+        hasil.textContent = response.ok
+            ? "Pesan berhasil dikirim, terima kasih ♡"
+            : "Pesan gagal dikirim.";
 
-    card.innerHTML = `
-        <img src="${project.image}" alt="${project.title}">
-        <h3>${project.title}</h3>
-        <p>${project.desc}</p>
-    `;
-
-    card.addEventListener('click', () => {
-        alert(`Anda memilih proyek: ${project.title}`);
-    });
-
-    projectGrid.appendChild(card);
-});
+        if (response.ok) {
+            form.reset();
+        }
+    };
+}
