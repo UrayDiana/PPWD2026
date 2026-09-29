@@ -132,7 +132,7 @@ main {
     position: fixed;
     top: 20px;
     right: 30px;
-    color: white;
+    color: #f7eded;
     font-size: 40px;
     cursor: pointer;
 }
@@ -167,4 +167,3 @@ footer {
         grid-template-columns: 1fr;
     }
 }
-
